@@ -1,0 +1,45 @@
+#Start Gateway
+##cd to Gravitee gateway directory
+./bin/gravitee
+
+#Start API Management
+##cd to Gravitee Management API directory
+./bin/gravitee
+
+#Start API Management UI
+##cd to Gravitee Management UI directory
+http-start (install npm  http-start first)
+
+#How to Create API
+Login as Admin to API Management UI
+Choose administration
+Choose APIs from menu
+Click (+) button to create new API
+Click (->) to create API from scratch
+## General Tab
+Fill all mandatory fields as requested
+## Gateway Tab
+Fill the url to access the service/app in backend field
+Skip plan and doc tab for now. (unless you already have it)
+Choose create without deploy for now
+
+#Create Plans
+Choose API that plan wanted to be added
+Choose plans
+Create new in staging tabs
+Define name, etc
+Enable Auto-validation
+Authentication type choose API key
+Choose policies as you wish
+Save
+Publish the plan
+
+#Deploy the API
+Click the button on yellow line
+
+#Start the API
+Go to API
+Choose the API
+Click start
+
+

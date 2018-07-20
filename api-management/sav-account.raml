@@ -1,0 +1,135 @@
+#%RAML 1.0
+version: v1
+title: SAV_Account
+baseUri: 172.17.0.1:30002/sav_account/v1
+/accounts:
+    description: Create Account
+    post:
+        headers:
+            X-Gravitee-Api-Key:
+            x-request-id:
+            x-job-id:
+            x-real-ip:
+            x-caller-service:
+            x-caller-domain:
+            datetime:
+            accept:
+            accept-language:
+            accept-encoding:
+            Content-Type:
+            x-device:
+            x-application:
+            x-channel:
+            user-agent:
+        body:
+            application/json:
+                example:    |
+                    {
+                        "rqBody":{
+                            "cif_number": 3333321112,
+                            "product_code": "SA001",
+                            "customer_name": "Mila Smith",
+                            "cif_customer_type": "1010",
+                            "account_branch": 1
+                        }
+                    }
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  |
+                            {
+                                "rsBody": {
+                                    "cif_number": 3333321112,
+                                    "account_number": "50000000039",
+                                    "product_code": "SA001"
+                                },
+                                "error": []
+                            }
+/balance/accounts:
+    description: Inquiry Account Balance
+    get:
+        queryParameters:
+            :account_number: array
+        headers:
+            X-Gravitee-Api-Key:
+            x-request-id:
+            x-job-id:
+            x-real-ip:
+            x-caller-service:
+            x-caller-domain:
+            datetime:
+            accept:
+            accept-language:
+            accept-encoding:
+            Content-Type:
+            x-device:
+            x-application:
+            x-channel:
+            user-agent:
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  |
+                            {
+                                "rsBody": {
+                                    "accounts": [
+                                        {
+                                            "account_number": "50000000039",
+                                            "ledger_balance": 0
+                                        }
+                                    ]
+                                },
+                                "error": []
+                            }
+/products:
+    description: Create new product
+    post:
+        headers:
+            X-Gravitee-Api-Key:
+            x-request-id:
+            x-job-id:
+            x-real-ip:
+            x-caller-service:
+            x-caller-domain:
+            datetime:
+            accept:
+            accept-language:
+            accept-encoding:
+            Content-Type:
+            x-device:
+            x-application:
+            x-channel:
+            user-agent:
+        body:
+            application/json:
+                example:    |
+                    {
+                        "rqBody":{
+                            "product_code": "AN012",
+                            "product_description": "Andy Test Product",
+                            "product_group": "TES",
+                            "currency": "IDR",
+                            "maximum_balance": 0,
+                            "maximum_credit_per_month": 0,
+                            "allow_negative_balance": "N",
+                            "ownership_limit_per_cif": 1,
+                            "ownership": 1,
+                            "interest_id":"",
+                            "interest_posting":1,
+                            "interest_posting_frequency":"D"
+                        }
+                    }
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  |
+                            {
+                                "rsBody": {
+                                    "product_code": "AN012",
+                                    "product_description": "Andy Test Product"
+                                },
+                                "error": []
+                            }

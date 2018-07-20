@@ -1,0 +1,98 @@
+#%RAML 1.0
+version: v1
+title: Pilot
+baseUri: localhost:8080
+/hello:
+    get:
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  |
+                            {
+                                "message": "Hello Gin Framework."
+                            }
+/ping:
+    get:
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  |
+                            "pong"
+/api/books:
+    get:
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  | 
+                            [{
+                                "title": "The Hitchhiker's Guide to the Galaxy",
+                                "author": "Douglas Adams",
+                                "isbn": "0345391802"
+                            },
+                            {
+                                "title": "Cloud Native Go",
+                                "author": "M.-L. Reimer",
+                                "isbn": "0000000000"
+                            }]
+/api/book:
+    post:
+        body: 
+            application/json:
+                example:  |
+                    {
+                        "title": "Harry Potter and the Order of Phoenix",
+                        "author": "J.K Rowling",
+                        "isbn": "123111111",
+                        "description": "Harry Potter Book 3"
+                    }
+        responses: 
+            201:
+/api/books/:isbn:
+    get:
+        description: Retrieve books by ISBN
+        queryParameters:
+            :isbn:
+                description: Specify the ISBN of the book that you want to retrieve
+                type: string
+                required: false
+                example: "1234567890"
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example: |
+                            {
+                                "title": "Cloud Native Go",
+                                "author": "M.-L. Reimer",
+                                "isbn": "0000000000"
+                            }
+    put:
+        description: Update books by ISBN
+        queryParameters: 
+            :isbn:
+                description: Specify the ISBN of the book that you want to update
+                type: string
+                required: false
+                example: "1234567890"
+        body: 
+            application/json:
+                example:  |
+                    {
+                        "title": "Harry Potter and the Goblet of Fire",
+                        "author": "J.K. Rowling",
+                        "isbn": "1234123412",
+                        "description": "Harry Potter book 4"
+                    }
+        responses: 
+            200:
+    delete:
+        description: Delete books by ISBN
+        queryParameters: 
+            :isbn:
+                description: Specify the ISBN of the book that you want to delete
+                type: string
+                required: false
+                example: "1234567890"
