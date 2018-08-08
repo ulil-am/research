@@ -1,9 +1,9 @@
 #%RAML 1.0
 version: v1
-title: SAV_Account
-baseUri: localhost:8002/sav_account/v1
-/accounts:
-    description: Create Account
+title: SAV_TXN
+baseUri: localhost:8002/sav_txn/v1
+/incoming/validate/OTHBANK:
+    description: Validate Incoming Transaction from Other Bank
     post:
         headers:
             X-Gravitee-Api-Key:
@@ -26,11 +26,12 @@ baseUri: localhost:8002/sav_account/v1
                 example:    |
                     {
                         "rqBody":{
-                            "cif_number": 3333321112,
-                            "product_code": "SA001",
-                            "customer_name": "Mila Smith",
-                            "cif_customer_type": "1010",
-                            "account_branch": 1
+                            "source_bank_code":"506",
+                            "beneficiary_bank_code":"009",
+                            "source_account_number":"5000000001226",
+                            "beneficiary_account_number":"50000000096",
+                            "transaction_amount": 1000000,
+                            "service_branch": 1
                         }
                     }
         responses: 
@@ -40,9 +41,56 @@ baseUri: localhost:8002/sav_account/v1
                         example:  |
                             {
                                 "rsBody": {
-                                    "cif_number": 3333321112,
-                                    "account_number": "50000000039",
-                                    "product_code": "SA001"
+                                    "beneficiary_account_number": "50000000096",
+                                    "beneficiary_account_name": "John Smith",
+                                    "transaction_amount": 1000000,
+                                    "to_account_branch": 0
+                                },
+                                "error": []
+                            }
+/incoming/submit/OTHBANK:
+    description: Submit Incoming Transaction from Other Bank
+    post:
+        headers:
+            X-Gravitee-Api-Key:
+            x-request-id:
+            x-job-id:
+            x-real-ip:
+            x-caller-service:
+            x-caller-domain:
+            datetime:
+            accept:
+            accept-language:
+            accept-encoding:
+            Content-Type:
+            x-device:
+            x-application:
+            x-channel:
+            user-agent:
+        body:
+            application/json:
+                example:    |
+                    {
+                        "rqBody":{
+                            "source_bank_code":"506",
+                            "beneficiary_bank_code":"009",
+                            "source_account_number":"5000000001226",
+                            "beneficiary_account_number":"50000000096",
+                            "transaction_amount": 1000000,
+                            "service_branch": 1
+                        }
+                    }
+        responses: 
+            200:
+                body: 
+                    application/json:
+                        example:  |
+                            {
+                                "rsBody": {
+                                    "beneficiary_account_number": "50000000096",
+                                    "beneficiary_account_name": "John Smith",
+                                    "transaction_amount": 1000000,
+                                    "to_account_branch": 0
                                 },
                                 "error": []
                             }

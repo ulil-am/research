@@ -1,0 +1,263 @@
+swagger: '2.0'
+info:
+  title: Account v2
+  version: v1
+host: '172.17.0.1:30002'
+basePath: /sav_account/v1
+paths:
+  /accounts:
+    post:
+      operationId: POST_accounts
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            example:
+              rsBody:
+                cif_number: 3333321112
+                account_number: '50000000039'
+                product_code: SA001
+              error: []
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: header
+          name: x-request-id
+          required: true
+        - type: string
+          in: header
+          name: x-job-id
+          required: false
+        - type: string
+          in: header
+          name: x-real-ip
+          required: true
+        - type: string
+          in: header
+          name: x-caller-service
+          required: true
+        - type: string
+          in: header
+          name: x-caller-domain
+          required: true
+        - type: string
+          in: header
+          name: datetime
+          required: true
+        - type: string
+          in: header
+          name: accept
+          required: true
+        - type: string
+          in: header
+          name: accept-language
+          required: false
+        - type: string
+          in: header
+          name: accept-encoding
+          required: false
+        - type: string
+          in: header
+          name: Content-Type
+          required: true
+        - type: string
+          in: header
+          name: x-device
+          required: false
+        - type: string
+          in: header
+          name: x-application
+          required: false
+        - type: string
+          in: header
+          name: x-channel
+          required: false
+        - type: string
+          in: header
+          name: user-agent
+          required: false
+        - schema:
+            example:
+              rqBody:
+                cif_number: 3333321112
+                product_code: SA001
+                customer_name: Mila Smith
+                cif_customer_type: '1010'
+                account_branch: 1
+            type: string
+          in: body
+          name: body
+          required: true
+  /balance/accounts:
+    get:
+      operationId: GET_balance-accounts
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            example:
+              rsBody:
+                accounts:
+                  - account_number: '50000000039'
+                    ledger_balance: 0
+              error: []
+      parameters:
+        - type: string
+          in: header
+          name: x-request-id
+          required: true
+        - type: string
+          in: header
+          name: x-job-id
+          required: false
+        - type: string
+          in: header
+          name: x-real-ip
+          required: true
+        - type: string
+          in: header
+          name: x-caller-service
+          required: true
+        - type: string
+          in: header
+          name: x-caller-domain
+          required: true
+        - type: string
+          in: header
+          name: datetime
+          required: true
+        - type: string
+          in: header
+          name: accept
+          required: true
+        - type: string
+          in: header
+          name: accept-language
+          required: false
+        - type: string
+          in: header
+          name: accept-encoding
+          required: false
+        - type: string
+          in: header
+          name: Content-Type
+          required: true
+        - type: string
+          in: header
+          name: x-device
+          required: false
+        - type: string
+          in: header
+          name: x-application
+          required: false
+        - type: string
+          in: header
+          name: x-channel
+          required: false
+        - type: string
+          in: header
+          name: user-agent
+          required: false
+        - type: array
+          in: query
+          name: ':account_number'
+          required: true
+          items:
+            type: string
+  /products:
+    post:
+      operationId: POST_products
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            example:
+              rsBody:
+                product_code: AN012
+                product_description: Andy Test Product
+              error: []
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: header
+          name: x-request-id
+          required: true
+        - type: string
+          in: header
+          name: x-job-id
+          required: false
+        - type: string
+          in: header
+          name: x-real-ip
+          required: true
+        - type: string
+          in: header
+          name: x-caller-service
+          required: true
+        - type: string
+          in: header
+          name: x-caller-domain
+          required: true
+        - type: string
+          in: header
+          name: datetime
+          required: true
+        - type: string
+          in: header
+          name: accept
+          required: true
+        - type: string
+          in: header
+          name: accept-language
+          required: false
+        - type: string
+          in: header
+          name: accept-encoding
+          required: false
+        - type: string
+          in: header
+          name: Content-Type
+          required: true
+        - type: string
+          in: header
+          name: x-device
+          required: false
+        - type: string
+          in: header
+          name: x-application
+          required: false
+        - type: string
+          in: header
+          name: x-channel
+          required: false
+        - type: string
+          in: header
+          name: user-agent
+          required: false
+        - schema:
+            example:
+              rqBody:
+                product_code: AN012
+                product_description: Andy Test Product
+                product_group: TES
+                currency: IDR
+                maximum_balance: 0
+                maximum_credit_per_month: 0
+                allow_negative_balance: 'N'
+                ownership_limit_per_cif: 1
+                ownership: 1
+                interest_id: ''
+                interest_posting: 1
+                interest_posting_frequency: D
+            type: string
+          in: body
+          name: body
+          required: true
