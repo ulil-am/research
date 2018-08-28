@@ -1,0 +1,66 @@
+# ingress gateway is use for like gateway in one domain
+# for example below is use for saving domain that accept the port 80 and protocol http
+# to receive call from the client
+# the name must start with http and the protocol also one of listed in list below
+# HTTP
+# HTTP2
+# TCP
+# MONGO
+
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: dsav-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+  - port:
+      number: 2379
+      name: dsav-mongo
+      protocol: MONGO
+    hosts:
+    - "*"
+  # - port:
+  #     number: 3307
+  #     name: tnindo-postgres
+  #     protocol: TCP
+  #   hosts:
+  #   - "*"    
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: dsav-account
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - dsav-gateway
+  http:
+  - match:
+    - uri:
+        exact: /dsav_account/.*
+    route:
+    - destination:
+        host: dsav-account
+        port:
+          number: 30212
+  tcp:
+  - route:
+    - destination:
+        host: dsav-mongo
+        port:
+          number: 31111
+  - route:
+    - destination:
+        host: tnindo-postgres
+        port:
+          number: 31008
+  

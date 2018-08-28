@@ -1,0 +1,39 @@
+###########################################################################
+# Ingress resource (gateway)
+##########################################################################
+# the ingress is use for mapping the request from ingress gateway
+# with configuration by path for example sav_account/* path will be redirect or mapping
+# to saving-account with protocol http
+# backend:
+#   serviceName: saving-account
+#   servicePort: http-account
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: saving-gateway
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /dsav_account/.*
+        backend:
+          serviceName: dsav-account
+          servicePort: http-account
+      - path: /dsav_txn/.*
+        backend:
+          serviceName: dsav-txn
+          servicePort: app
+      - path: /dsav_report/.*
+        backend:
+          serviceName: dsav-report
+          servicePort: app
+      - path: /dsav_interest/.*
+        backend:
+          serviceName: dsav-interest
+          servicePort: app
+      - path: /reverse.Restful/.*
+        backend:
+          serviceName: dsav-txn
+          servicePort: grpc-txn

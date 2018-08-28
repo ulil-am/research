@@ -1,0 +1,62 @@
+# this file for deployment interest
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dsav-interest
+  labels:
+    app: dsav-interest
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dsav-interest
+    spec:
+      containers:
+      - name: dsav-interest
+        image: tnindo/dsav_interest:v1stag.0.21
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /go/src/interest/logs
+          name: interest-logs
+        env:
+        - name: GOPATH
+          value: "/go"
+        - name: GOAPP
+          value: "interest"
+        - name: GOENV
+          value: "kube"
+        - name: SMITHBANKID
+          value: "009"
+        - name: MQ
+          value: "kube"
+        - name: HTTP
+          value: "kube"
+        - name: RPC
+          value: "kube"
+        #- name: CRED_MONGODB
+        #  value: "mongodb://172.17.0.1:31001"
+        - name: CRED_MQ
+          value: "amqp://savrabbit:savrabbit@192.168.43.165:30011/"
+        - name: CRED_PGSQL
+          value: "postgres://postgres:root@192.168.43.165:31008/dsav_interest?sslmode=disable"
+        - name: DB_MAXIDLE
+          value: "50"
+        - name: DB_MAXCONN
+          value: "50"
+        - name: RPC_TXN
+          value: "txn@dsav-txn:31904"
+        - name: RPC_REPORT
+          value: "report@dsav-report:56086"
+      restartPolicy: Always
+      volumes:
+      - name: interest-logs
+        hostPath:
+          path: /data/saving_digital_interest/logs 
+      imagePullSecrets:
+      - name: regsecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1

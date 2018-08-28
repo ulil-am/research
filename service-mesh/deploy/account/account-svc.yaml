@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: account
+  labels:
+    app: account
+spec:
+  ports:
+  -  port: 8082
+     targetPort: 8082
+     nodePort: 30002
+     name: app
+  - port: 58082
+    targetPort: 58082
+    nodePort: 32102
+    name: grpc
+  type: LoadBalancer
+  selector:
+    app: account

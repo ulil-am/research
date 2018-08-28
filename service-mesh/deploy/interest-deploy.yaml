@@ -1,0 +1,80 @@
+# this file for deployment interest
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: interest
+  labels:
+    app: interest
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: interest
+    spec:
+      containers:
+      - name: interest
+        image: tnindo/interest:v1stag.0.42
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /go/src/interest/logs
+          name: interest-logs
+        env:
+        - name: GOPATH
+          value: "/go"
+        - name: GOAPP
+          value: "interest"
+        - name: GOENV
+          value: "kube"
+        - name: SMITHBANKID
+          value: "009"
+        - name: MQ
+          value: "kube"
+        - name: HTTP
+          value: "kube"
+        - name: RPC
+          value: "kube"
+        #- name: CRED_MONGODB
+        #  value: "mongodb://172.17.0.1:31001"
+        - name: CRED_MQ
+          value: "amqp://savrabbit:savrabbit@savrabbitmq:5672/"
+        - name: CRED_PGSQL
+          value: "postgres://postgres:root@10.100.16.141:31008/smith_interest?sslmode=disable"
+        - name: DB_MAXIDLE
+          value: "50"
+        - name: DB_MAXCONN
+          value: "50"
+        - name: RPC_TXN
+          value: "txn@172.17.0.1:32104"
+      restartPolicy: Always
+      volumes:
+      - name: interest-logs
+        hostPath:
+          path: /data/saving_interest/logs 
+      imagePullSecrets:
+      - name: regsecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: interest
+  labels:
+    app: interest
+spec:
+  ports:
+  -  port: 8085
+     targetPort: 8085
+     nodePort: 30005
+     name: app
+  - port: 58085
+    targetPort: 58085
+    nodePort: 32105
+    name: grpc
+  type: LoadBalancer
+  selector:
+    app: interest

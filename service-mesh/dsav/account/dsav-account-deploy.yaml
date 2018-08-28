@@ -1,0 +1,54 @@
+# this file for deployment dsav-account
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dsav-account
+  labels:
+    app: dsav-account
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dsav-account
+    spec:
+      containers:
+      - name: dsav-account
+        image: tnindo/dsav_account:v1stag.0.18
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /go/src/account/logs
+          name: account-logs
+        env:
+        - name: GOPATH
+          value: "/go"
+        - name: GOAPP
+          value: "account"
+        - name: GOENV
+          value: "kube"
+        - name: HTTP
+          value: "kube"
+        - name: RPC
+          value: "kube"
+        - name: CRED_MONGODB
+          value: "mongodb://192.168.43.165:31111"
+        - name: CRED_MQ
+          value: "amqp://savrabbit:savrabbit@192.168.43.165:30011/"
+        - name: CRED_REDIS
+          value: "dsav-redis:6379"
+        - name: RPC_TXN
+          value: "txn@dsav-txn:31904"
+        - name: RPC_INTEREST
+          value: "interest@dsav-interest:56085"
+      restartPolicy: Always
+      volumes:
+      - name: account-logs
+        hostPath:
+          path: /data/digital_saving_account/logs 
+      imagePullSecrets:
+      - name: regsecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1

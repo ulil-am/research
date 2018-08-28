@@ -1,0 +1,35 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: txn-egress-pg
+spec:
+  hosts:
+    - postgresql.default.svc.cluster.local
+  ports:
+    - number: 31008
+      name: postgres
+      protocol: TCP
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: ServiceEntry
+# metadata:
+#   name: sav-txn-egress-mongo
+# spec:
+#   hosts:
+#     - saving-mongo.default.svc.cluster.local
+#   ports:
+#     - number: 31001
+#       name: saving-mongo
+#       protocol: MONGO
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: ServiceEntry
+# metadata:
+#   name: sav-txn-egress-redis
+# spec:
+#   hosts:
+#     - saving-redis.default.svc.cluster.local
+#   ports:
+#     - number: 31005
+#       name: saving-redis
+#       protocol: TCP

@@ -1,0 +1,82 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-txnpg
+spec:
+  hosts:
+    - finxactpg.default.svc.cluster.local
+  ports:
+    - number: 31901
+      name: finxactpg
+      protocol: TCP
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-txnmq
+spec:
+  hosts:
+    - dsav-txnmq.default.svc.cluster.local
+  ports:
+    - number: 31905
+      name: dsav-txnmq
+      protocol: TCP
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-dsav-account
+spec:
+  hosts:
+    - dsav-account.default.svc.cluster.local
+  ports:
+    - number: 30212
+      name: dsav-account-http
+      protocol: HTTP
+    - number: 30222
+      name: dsav-account-grpc
+      protocol: HTTP2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-dsav-interest
+spec:
+  hosts:
+    - dsav-interest.default.svc.cluster.local
+  ports:
+    - number: 30215
+      name: dsav-interest-http
+      protocol: HTTP
+    - number: 30225
+      name: dsav-interest-grpc
+      protocol: HTTP2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-dsav-report
+spec:
+  hosts:
+    - dsav-report.default.svc.cluster.local
+  ports:
+    - number: 30216
+      name: dsav-report-http
+      protocol: HTTP
+    - number: 30226
+      name: dsav-report-grpc
+      protocol: HTTP2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-read
+spec:
+  hosts:
+    - 10.244.0.153
+  ports:
+    - name: dsav-read
+      protocol: TCP
+      port: 5432
+
+

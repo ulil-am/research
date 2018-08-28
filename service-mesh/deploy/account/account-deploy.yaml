@@ -1,0 +1,54 @@
+# this file for deployment account
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: account
+  labels:
+    app: account
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: account
+    spec:
+      containers:
+      - name: account
+        image: tnindo/account:v1stag.0.31
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /go/src/account/logs
+          name: account-logs
+        env:
+        - name: GOPATH
+          value: "/go"
+        - name: GOAPP
+          value: "account"
+        - name: GOENV
+          value: "kube"
+        - name: HTTP
+          value: "kube"
+        - name: RPC
+          value: "kube"
+        - name: CRED_MONGODB
+          value: "mongodb://192.168.43.165:31111"
+        - name: CRED_MQ
+          value: "amqp://savrabbit:savrabbit@192.168.43.165:5672/"
+        - name: CRED_REDIS
+          value: "192.168.43.165:31112"
+        - name: RPC_TXN
+          value: "txn@172.17.0.1:32104"
+        - name: RPC_INTEREST
+          value: "interest@172.17.0.1:32105"
+      restartPolicy: Always
+      volumes:
+      - name: account-logs
+        hostPath:
+          path: /data/saving_account/logs 
+      imagePullSecrets:
+      - name: regsecret
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1

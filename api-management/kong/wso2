@@ -1,0 +1,13 @@
+Instructions (After Installation):
+ 
+To run "dashboard.sh file", open new terminal and run:
+   `$ wso2sp-4.2.0-dashboard`
+ 
+To run "editor.sh" file, open new terminal and run:
+   `$ wso2sp-4.2.0-editor`
+ 
+To run "manager.sh" file, open new terminal and run:
+   `$ wso2sp-4.2.0-manager`
+ 
+To run "worker.sh" file, open new terminal and run:
+   `$ wso2sp-4.2.0-worker`

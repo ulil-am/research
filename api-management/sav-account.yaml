@@ -1,8 +1,12 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  title: Account v2
+  title: SAV_Account
   version: v1
-host: '172.17.0.1:30002'
+  description: SAV Account Service
+host: "172.17.0.1:30002"
+schemes:
+  - http
+  - https
 basePath: /sav_account/v1
 paths:
   /accounts:
@@ -11,13 +15,13 @@ paths:
       produces:
         - application/json
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           schema:
             example:
               rsBody:
                 cif_number: 3333321112
-                account_number: '50000000039'
+                account_number: "50000000039"
                 product_code: SA001
               error: []
       consumes:
@@ -27,6 +31,7 @@ paths:
           in: header
           name: x-request-id
           required: true
+          default: 008fb634-2bcc-4541-8eba-53bcec01f268
         - type: string
           in: header
           name: x-job-id
@@ -35,22 +40,27 @@ paths:
           in: header
           name: x-real-ip
           required: true
+          default: 127.0.0.1
         - type: string
           in: header
           name: x-caller-service
           required: true
+          default: Create Customer
         - type: string
           in: header
           name: x-caller-domain
           required: true
+          default: Front
         - type: string
           in: header
           name: datetime
           required: true
+          default: "2017-10-04T20:09:42.000Z"
         - type: string
           in: header
           name: accept
           required: true
+          default: application/json
         - type: string
           in: header
           name: accept-language
@@ -63,6 +73,7 @@ paths:
           in: header
           name: Content-Type
           required: true
+          default: application/json
         - type: string
           in: header
           name: x-device
@@ -85,25 +96,28 @@ paths:
                 cif_number: 3333321112
                 product_code: SA001
                 customer_name: Mila Smith
-                cif_customer_type: '1010'
+                cif_customer_type: "1010"
                 account_branch: 1
             type: string
           in: body
           name: body
           required: true
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      description: Endpoint for account creation
   /balance/accounts:
     get:
       operationId: GET_balance-accounts
       produces:
         - application/json
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           schema:
             example:
               rsBody:
                 accounts:
-                  - account_number: '50000000039'
+                  - account_number: "50000000039"
                     ledger_balance: 0
               error: []
       parameters:
@@ -111,6 +125,7 @@ paths:
           in: header
           name: x-request-id
           required: true
+          default: 008fb634-2bcc-4541-8eba-53bcec01f268
         - type: string
           in: header
           name: x-job-id
@@ -119,22 +134,27 @@ paths:
           in: header
           name: x-real-ip
           required: true
+          default: 127.0.0.1
         - type: string
           in: header
           name: x-caller-service
           required: true
+          default: Create Customer
         - type: string
           in: header
           name: x-caller-domain
           required: true
+          default: Front
         - type: string
           in: header
           name: datetime
           required: true
+          default: "2017-10-04T20:09:42.000Z"
         - type: string
           in: header
           name: accept
           required: true
+          default: application/json
         - type: string
           in: header
           name: accept-language
@@ -147,6 +167,7 @@ paths:
           in: header
           name: Content-Type
           required: true
+          default: application/json
         - type: string
           in: header
           name: x-device
@@ -165,18 +186,20 @@ paths:
           required: false
         - type: array
           in: query
-          name: ':account_number'
+          name: account_number
           required: true
           items:
             type: string
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
   /products:
     post:
       operationId: POST_products
       produces:
         - application/json
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           schema:
             example:
               rsBody:
@@ -190,6 +213,7 @@ paths:
           in: header
           name: x-request-id
           required: true
+          default: 008fb634-2bcc-4541-8eba-53bcec01f268
         - type: string
           in: header
           name: x-job-id
@@ -198,22 +222,27 @@ paths:
           in: header
           name: x-real-ip
           required: true
+          default: 127.0.0.1
         - type: string
           in: header
           name: x-caller-service
           required: true
+          default: Create Customer
         - type: string
           in: header
           name: x-caller-domain
           required: true
+          default: Front
         - type: string
           in: header
           name: datetime
           required: true
+          default: "2017-10-04T20:09:42.000Z"
         - type: string
           in: header
           name: accept
           required: true
+          default: application/json
         - type: string
           in: header
           name: accept-language
@@ -226,6 +255,7 @@ paths:
           in: header
           name: Content-Type
           required: true
+          default: application/json
         - type: string
           in: header
           name: x-device
@@ -251,13 +281,15 @@ paths:
                 currency: IDR
                 maximum_balance: 0
                 maximum_credit_per_month: 0
-                allow_negative_balance: 'N'
+                allow_negative_balance: "N"
                 ownership_limit_per_cif: 1
                 ownership: 1
-                interest_id: ''
+                interest_id: ""
                 interest_posting: 1
                 interest_posting_frequency: D
             type: string
           in: body
           name: body
           required: true
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited

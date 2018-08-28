@@ -1,0 +1,65 @@
+# this configuration is use egress rule from account service connect to external service
+# for example in this part is account service will be connect to 
+# - sav-txn
+# - saving-mongo
+# - saving-redis
+
+# every serviceEntry is describe with ports property ,it's mean that port will be open in service account
+# so service account connect to external service at port 32104, 3004  for connection saving-txn.default-svc.cluster.local (represent host name)
+# and the supported protocol is HTTP, HTTP2, TCP, MONGO 
+# http2 is represent the grpc connection
+
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-report-egress-interest
+spec:
+  hosts:
+    - dsav-interest.default.svc.cluster.local
+  ports:
+    - number: 30215
+      name: txn-http
+      protocol: HTTP
+    - number: 30225
+      name: txn-grpc
+      protocol: HTTP2
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: ServiceEntry
+# metadata:
+#   name: iterest-egress-mongo
+# spec:
+#   hosts:
+#     - dsav-mongo.default.svc.cluster.local
+#   ports:
+#     - number: 31111
+#       name: mongo
+#       protocol: MONGO
+---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: dsav-interest-egress-postgres
+# spec:
+#   hosts:
+#   - tnindo-postgres.default.svc.cluster.local
+#   tcp:
+#   - match:
+#     - port: 31008
+#     route:
+#     - destination:
+#         host: tnindo-postgres.default.svc.cluster.local
+#         port:
+#           number: 31008
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-report-egress-pg
+spec:
+  hosts:
+    - tnindo-postgres.default.svc.cluster.locall
+  ports:
+    - number: 31008
+      name: tnindo-postgres
+      protocol: TCP
