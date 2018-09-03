@@ -45,15 +45,15 @@ spec:
 #        - name: CRED_MQ
 #          value: "amqp://savrabbit:savrabbit@savrabbitmq:5672/"
         - name: CRED_PGSQL
-          value: "postgres://postgres:root@192.168.43.165:31008/dsav_report?sslmode=disable"
+          value: "postgres://postgres:root@tnindo-postgres:5432/dsav_report?sslmode=disable"
         - name: CRED_SQLITE
           value: ":memory:"
         - name: RPC_TXN
           value: "txn@dsav-txn:8081"
+        - name: HOST_INTEREST
+          value: "http://192.168.8.41:31380"
         - name: RPC_INTEREST
           value: "interest@dsav-interest:56085"
-        - name: HOST_INTEREST
-          value: "http://192.168.43.165:31380"
         - name: DEBUG
           value: "1"
       restartPolicy: Always

@@ -67,16 +67,15 @@ spec:
       name: dsav-report-grpc
       protocol: HTTP2
 ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: ServiceEntry
-# metadata:
-#   name: dsav-txn-egress-read
-# spec:
-#   address:
-#     - 10.244.0.0/24
-#   ports:
-#     - name: dsav-read
-#       protocol: TCP
-#       # port: 5432
-
-
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: dsav-txn-egress-read
+spec:
+  hosts:
+    - finxactpg.default.svc.cluster.local
+  address:
+    - 192.168.186.0/24
+  ports:
+    - name: dsav-read
+      protocol: TCP

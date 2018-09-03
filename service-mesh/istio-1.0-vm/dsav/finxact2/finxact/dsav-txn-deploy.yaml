@@ -1,15 +1,15 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: dsav-txn
+  name: dsav-txn2
   labels:
-    app: dsav-txn
+    app: dsav-txn2
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: dsav-txn
+        app: dsav-txn2
     spec:
       # affinity:
       #   nodeAffinity:
@@ -20,7 +20,7 @@ spec:
       #             operator: In
       #             values: ["yes"]
       containers:
-      - name: dsav-txn
+      - name: dsav-txn2
         image: tnindo/finxcore:0.250
         imagePullPolicy: IfNotPresent
         ports:
@@ -32,9 +32,9 @@ spec:
         - name: TO_REPLACE_Finxact_TimeOffset
           value: "TO_REPLACE_TimeOffset"
         - name: FINX_CORE_DB_SQL_URL
-          value: "host=192.168.43.165 port=31901 user=postgres dbname=zbch_trn_db password=password sslmode=disable"
+          value: "host=finxactpg port=5432 user=postgres dbname=zbch_trn_db password=password sslmode=disable"
         - name: FINX_CORE_REPORTDB_SQL_URL
-          value: "host=192.168.43.165 port=31901 user=postgres dbname=core_reports password=password sslmode=disable"
+          value: "host=finxactpg port=5432 user=postgres dbname=core_reports password=password sslmode=disable"
         volumeMounts:
 #        - mountPath: /application/cfg
 #          name: application-vol-config
@@ -59,19 +59,19 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dsav-txn
+  name: dsav-txn2
   labels:
-    app: dsav-txn
+    app: dsav-txn2
 spec:
   ports:
   -  port: 8080
      targetPort: 8080
-     nodePort: 31903
+     nodePort: 31911
      name: app
   -  port: 8081
      targetPort: 8081
-     nodePort: 31904
+     nodePort: 31912
      name: grpc
   type: NodePort
   selector:
-    app: dsav-txn
+    app: dsav-txn2

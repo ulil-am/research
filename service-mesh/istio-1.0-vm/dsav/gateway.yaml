@@ -26,13 +26,7 @@ spec:
       name: dsav-mongo
       protocol: MONGO
     hosts:
-    - "*"
-  # - port:
-  #     number: 3307
-  #     name: tnindo-postgres
-  #     protocol: TCP
-  #   hosts:
-  #   - "*"    
+    - "*"    
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -52,35 +46,15 @@ spec:
         host: dsav-account
         port:
           number: 30212
-  - match:
-    - uri:
-        exact: /dsav_txn/.*
-    route:
-    - destination:
-        host: dsav-txn
-        port:
-          number: 31903
-  - match:
-    - uri:
-        exact: /dsav_report/.*
-    route:
-    - destination:
-        host: dsav-report
-        port:
-          number: 30216
-  - match:
-    - uri:
-        exact: /dsav_interest/.*
-    route:
-    - destination:
-        host: dsav-interest
-        port:
-          number: 30215
   tcp:
   - route:
     - destination:
         host: dsav-mongo
         port:
           number: 31111
-
+  - route:
+    - destination:
+        host: tnindo-postgres
+        port:
+          number: 31008
   

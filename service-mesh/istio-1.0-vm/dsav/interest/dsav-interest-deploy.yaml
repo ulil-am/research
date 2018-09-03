@@ -37,9 +37,9 @@ spec:
         #- name: CRED_MONGODB
         #  value: "mongodb://172.17.0.1:31001"
         - name: CRED_MQ
-          value: "amqp://savrabbit:savrabbit@192.168.43.165:30011/"
+          value: "amqp://savrabbit:savrabbit@savrabbitmq:5672/"
         - name: CRED_PGSQL
-          value: "postgres://postgres:root@192.168.43.165:31008/dsav_interest?sslmode=disable"
+          value: "postgres://postgres:root@tnindo-postgres:5432/dsav_interest?sslmode=disable"
         - name: DB_MAXIDLE
           value: "50"
         - name: DB_MAXCONN

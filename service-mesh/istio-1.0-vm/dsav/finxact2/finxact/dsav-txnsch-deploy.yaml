@@ -1,0 +1,46 @@
+# apiVersion: extensions/v1beta1
+# kind: Deployment
+# metadata:
+#   name: dsav-txnsch
+#   labels:
+#     app: dsav-txnsch
+# spec:
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: dsav-txnsch
+#     spec:
+#       # affinity:
+#       #   nodeAffinity:
+#       #     requiredDuringSchedulingIgnoredDuringExecution:
+#       #       nodeSelectorTerms:
+#       #         - matchExpressions:
+#       #           - key: wallet
+#       #             operator: In
+#       #             values: ["yes"]
+#       containers:
+#       - name: dsav-txnsch
+#         image: tnindo/finxcore:0.21
+#         imagePullPolicy: IfNotPresent
+#         ports:
+#         - containerPort: 8080
+#         - containerPort: 8081
+#         env:
+#         - name: Finxact
+#           value: "Finxact"
+# #        volumeMounts:
+# #        - mountPath: /application/cfg
+# #          name: application-vol-config
+#       restartPolicy: Always
+#       imagePullSecrets:
+#       - name: regsecret
+# #      volumes:
+# #      - name: application-vol-config
+# #        hostPath:
+# #          path: /data/sav_vol_txnsch/cfg
+#   strategy:
+#     type: RollingUpdate
+#     rollingUpdate:
+#       maxUnavailable: 1
+#       maxSurge: 1

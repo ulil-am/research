@@ -46,7 +46,7 @@ spec:
   http:
   - match:
     - uri:
-        exact: /dsav_account/.*
+        prefix: /dsav_account/.*
     route:
     - destination:
         host: dsav-account
@@ -54,7 +54,7 @@ spec:
           number: 30212
   - match:
     - uri:
-        exact: /dsav_txn/.*
+        prefix: /dsav_txn/.*
     route:
     - destination:
         host: dsav-txn
@@ -62,7 +62,7 @@ spec:
           number: 31903
   - match:
     - uri:
-        exact: /dsav_report/.*
+        prefix: /dsav_report/.*
     route:
     - destination:
         host: dsav-report
@@ -70,7 +70,7 @@ spec:
           number: 30216
   - match:
     - uri:
-        exact: /dsav_interest/.*
+        prefix: /dsav_interest/.*
     route:
     - destination:
         host: dsav-interest

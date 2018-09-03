@@ -31,9 +31,9 @@ spec:
         - name: RPC
           value: "kube"
         - name: CRED_MONGODB
-          value: "mongodb://192.168.43.165:31111"
+          value: "mongodb://dsav-mongo:27017"
         - name: CRED_MQ
-          value: "amqp://savrabbit:savrabbit@192.168.43.165:30011/"
+          value: "amqp://savrabbit:savrabbit@savrabbitmq:5672/"
         - name: CRED_REDIS
           value: "dsav-redis:6379"
         - name: RPC_TXN

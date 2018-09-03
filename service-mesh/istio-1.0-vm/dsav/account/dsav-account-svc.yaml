@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dsav-account
+  labels:
+    app: dsav-account
+spec:
+  ports:
+  -  port: 6082
+     targetPort: 6082
+     nodePort: 30212
+     name: http-account
+  - port: 56082
+    targetPort: 56082
+    nodePort: 30222
+    name: grpc-account
+  type: LoadBalancer
+  selector:
+    app: dsav-account

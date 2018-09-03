@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: glmongodb
+  labels:
+    db: glmongodb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        db: glmongodb
+    spec:
+      containers:
+      - name: glmongodb
+        image: mongo:3.4.9
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /data/db
+          name: glmongodb-vol
+      restartPolicy: Always
+      volumes:
+      - name: glmongodb-vol
+        hostPath:
+          path: /data/glmongodb
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: glmongodb
+spec:
+  selector:
+    db: glmongodb
+  type: NodePort
+  ports:
+    - name: glmongodb
+      port: 27017
+      nodePort: 30151

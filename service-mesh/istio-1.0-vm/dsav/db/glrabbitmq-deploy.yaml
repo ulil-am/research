@@ -1,0 +1,57 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: glrabbitmq
+  labels:
+    app: glrabbitmq
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: glrabbitmq
+    spec:
+      containers:
+      - name: glrabbitmq
+        image: rabbitmq:3.6.6-management
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /var/lib/rabbitmq
+          name: glrabbitmq-vol
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: "glrabbit"
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "glrabbit"
+        - name: RABBITMQ_NODENAME
+          value: "rabbit@localhost"
+      restartPolicy: Always
+      volumes:
+      - name: glrabbitmq-vol
+        hostPath:
+          path: /data/glrabbitmq
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: glrabbitmq
+spec:
+  selector:
+    app: glrabbitmq
+  type: NodePort
+  ports:
+    - name: glamqp
+      port: 5672
+      nodePort: 30152
+    - name: glmqmgt
+      port: 15672
+      nodePort: 30153
+    - name: glepmd
+      port: 4369
+      protocol: TCP
+      targetPort: epmd

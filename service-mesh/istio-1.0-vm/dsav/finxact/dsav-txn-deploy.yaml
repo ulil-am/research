@@ -32,9 +32,9 @@ spec:
         - name: TO_REPLACE_Finxact_TimeOffset
           value: "TO_REPLACE_TimeOffset"
         - name: FINX_CORE_DB_SQL_URL
-          value: "host=192.168.43.165 port=31901 user=postgres dbname=zbch_trn_db password=password sslmode=disable"
+          value: "host=finxactpg port=5432 user=postgres dbname=zbch_trn_db password=password sslmode=disable"
         - name: FINX_CORE_REPORTDB_SQL_URL
-          value: "host=192.168.43.165 port=31901 user=postgres dbname=core_reports password=password sslmode=disable"
+          value: "host=finxactpg port=5432 user=postgres dbname=core_reports password=password sslmode=disable"
         volumeMounts:
 #        - mountPath: /application/cfg
 #          name: application-vol-config
@@ -72,6 +72,6 @@ spec:
      targetPort: 8081
      nodePort: 31904
      name: grpc
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: dsav-txn
