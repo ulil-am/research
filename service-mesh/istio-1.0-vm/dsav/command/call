@@ -1,0 +1,163 @@
+kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning -content-type='POST' -curl -H "Content-Type:application/json" -H "x-request-id:c0d519ea-c3bd-4818-8f86-8b67dc876457" -H "x-real-ip:localhost" -H "x-caller-service:client" -H "x-caller-domain:caller-domain" -H "x-device:android" -H "datetime:2017-08-24T13:43:56.41906615Z" -H "accept:application/json" -payload '-d {"set_time":0}' http://203.154.100.197:31380/dsav_account/v1/set_time
+
+
+kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning  http://203.154.100.197:31380/dsav_txn/v1/system/ping
+
+
+kubectl exec -it $FORTIO_POD  -c istio-proxy  -- sh -c 'curl localhost:15000/stats' | grep dsav_txn | grep pending
+
+kubectl exec -it dsav-account-54cf648b99-4bd86  -c istio-proxy  -- sh -c 'curl localhost:15000/stats' | grep dsav-txn | grep pending
+
+kubectl exec -it istio-ingressgateway-5d999c8757-9ffxs -n istio-system  -c istio-proxy  -- sh -c 'curl localhost:15000/stats' | grep dsav-account | grep pending
+istio-ingressgateway-5d999c8757-9ffxs
+kubectl logs -f istio-ingressgateway-5d999c8757-cz2kl -n istio-system
+
+kubectl port-forward -n istio-system $(kubectl get pod -n istio-system -l app=kubernetes-dashboard -o jsonpath='{.items[0].metadata.name}') 8081:8081
+
+
+ssh istio1.0-vm -L 16686:127.0.0.1:16686 
+Then connect to port 16686 via 127.0.0.1:16686.
+
+
+kubectl exec -it istio-ingressgateway-5d999c8757-cz2kl -n istio-system  -c istio-proxy  -- sh -c 'curl localhost:15000/stats' | grep dsav-account | grep pending
+
+
+
+
+
+
+content-length →129
+content-type →application/json
+date →Thu, 06 Sep 2018 07:35:23 GMT
+datetime →2018-09-06T14:35:23.615167719+07:00
+server →envoy
+x-envoy-upstream-service-time →96
+x-job-id →18090645B95C4802218734
+x-request-id →c0d519ea-c3bd-9818-8f86-8b67dc876457
+x-roundtrip →94
+
+
+Content-Length →129
+Content-Type →application/json
+Date →Thu, 06 Sep 2018 07:35:55 GMT
+Datetime →2018-09-06T14:35:55.422620603+07:00
+Server →TN Engineer. We are hiring
+X-Job-Id →1809062C77F39102984412
+X-Request-Id →c0d519ea-c3bd-4818-8f86-8b67dc876457
+X-Roundtrip →57
+
+x-request-id
+x-b3-traceid
+x-b3-spanid
+x-b3-parentspanid
+x-b3-sampled
+x-b3-flags
+x-ot-span-context
+
+
+]REQ_JOBID 180906B4049D1002093402 REQ_URL 180906B4049D1002093402 /dsav_account/v1/accounts REQ_HEADER 180906B4049D1002093402
+{  
+   "Accept":"*/*",
+   "Accept-Encoding":"gzip, deflate",
+   "Cache-Control":"no-cache",
+   "Content-Length":"311",
+   "Content-Type":"application/json",
+   "Datetime":"2017-08-24T13:43:56.41906615Z",
+   "Postman-Token":"c7779a81-7543-4631-88a8-f039e3b9ddf5",
+   "User-Agent":"PostmanRuntime/7.1.1",
+   "X-B3-Sampled":"1",
+   "X-B3-Spanid":"485947cce2bf58db",
+   "X-B3-Traceid":"485947cce2bf58db",
+   "X-Caller-Domain":"caller-domain",
+   "X-Caller-Service":"client",
+   "X-Device":"android",
+   "X-Envoy-Decorator-Operation":"dsav-account.default.svc.cluster.local:6082/dsav_account*",
+   "X-Envoy-Internal":"true",
+   "X-Forwarded-For":"192.168.8.41",
+   "X-Forwarded-Proto":"http",
+   "X-Istio-Attributes":"CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UuaG9zdBIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAoqCh1kZXN0aW5hdGlvbi5zZXJ2aWNlLm5hbWVzcGFjZRIJEgdkZWZhdWx0CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UubmFtZRIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAo/ChNkZXN0aW5hdGlvbi5zZXJ2aWNlEigSJmRzYXYtYWNjb3VudC5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsCk8KCnNvdXJjZS51aWQSQRI/a3ViZXJuZXRlczovL2lzdGlvLWluZ3Jlc3NnYXRld2F5LTVkOTk5Yzg3NTctY3oya2wuaXN0aW8tc3lzdGVt",
+   "X-Real-Ip":"localhost",
+   "X-Request-Id":"c0d519ea-c3bd-9818-8f86-8b67dc876457"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[I] [router.go:127] REQ_JOBID 1809066BA8382302770637 REQ_URL 1809066BA8382302770637 /dsav_account/v1/accounts REQ_HEADER 1809066BA8382302770637 {"Accept":"*/*","Accept-Encoding":"gzip, deflate","Cache-Control":"no-cache","Content-Length":"311","Content-Type":"application/json","Datetime":"2017-08-24T13:43:56.41906615Z","Postman-Token":"5e9222dc-1568-41c6-90bc-57673ed2e6e2","User-Agent":"PostmanRuntime/7.1.1","X-B3-Parentspanid":"485947cce2bf58da","X-B3-Sampled":"1","X-B3-Spanid":"ac4a61909994d549","X-B3-Traceid":"485947cce2bf58da","X-Caller-Domain":"caller-domain","X-Caller-Service":"client","X-Device":"android","X-Envoy-Decorator-Operation":"dsav-account.default.svc.cluster.local:6082/dsav_account*","X-Envoy-Internal":"true","X-Forwarded-For":"192.168.8.41","X-Forwarded-Proto":"http","X-Istio-Attributes":"CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UuaG9zdBIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAoqCh1kZXN0aW5hdGlvbi5zZXJ2aWNlLm5hbWVzcGFjZRIJEgdkZWZhdWx0CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UubmFtZRIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAo/ChNkZXN0aW5hdGlvbi5zZXJ2aWNlEigSJmRzYXYtYWNjb3VudC5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsCk8KCnNvdXJjZS51aWQSQRI/a3ViZXJuZXRlczovL2lzdGlvLWluZ3Jlc3NnYXRld2F5LTVkOTk5Yzg3NTctY3oya2wuaXN0aW8tc3lzdGVt","X-Real-Ip":"localhost","X-Request-Id":"c0d519ea-c3bd-9818-8f86-8b67dc876457"} REQ_BODY 1809066BA8382302770637 {    "rqBody":{        "cif_number":21412312,        "product_code":"DSAV1002",        "customer_name":"Riendu for finX",        "cif_customer_type":"1010",        "account_branch":1,        "user_id":"1",        "payment_condition":"สั่งจ่ายเพียงคนเดียว"    }} 
+
+
+
+
+[I] [router.go:127] REQ_JOBID 18090652CC253402309254 REQ_URL 18090652CC253402309254 /dsav_account/v1/accounts REQ_HEADER 18090652CC253402309254 {"Accept":"*/*","Accept-Encoding":"gzip, deflate","Cache-Control":"no-cache","Content-Length":"311","Content-Type":"application/json","Datetime":"2017-08-24T13:43:56.41906615Z","Postman-Token":"b180a0e0-a7d3-44ed-a8d5-35a085b556f3","User-Agent":"PostmanRuntime/7.1.1","X-B3-Sampled":"1","X-B3-Spanid":"bf1c1f2439f8caab","X-B3-Traceid":"bf1c1f2439f8caab","X-Caller-Domain":"caller-domain","X-Caller-Service":"client","X-Device":"android","X-Envoy-Decorator-Operation":"dsav-account.default.svc.cluster.local:6082/dsav_account*","X-Envoy-Internal":"true","X-Forwarded-For":"192.168.8.41","X-Forwarded-Proto":"http","X-Istio-Attributes":"CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UuaG9zdBIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAoqCh1kZXN0aW5hdGlvbi5zZXJ2aWNlLm5hbWVzcGFjZRIJEgdkZWZhdWx0CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UubmFtZRIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAo/ChNkZXN0aW5hdGlvbi5zZXJ2aWNlEigSJmRzYXYtYWNjb3VudC5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsCk8KCnNvdXJjZS51aWQSQRI/a3ViZXJuZXRlczovL2lzdGlvLWluZ3Jlc3NnYXRld2F5LTVkOTk5Yzg3NTctY3oya2wuaXN0aW8tc3lzdGVt","X-Real-Ip":"localhost","X-Request-Id":"c0d519ea-c3bd-9818-8f86-8b67dc876457"} REQ_BODY 18090652CC253402309254 {    "rqBody":{        "cif_number":21412312,        "product_code":"DSAV1002",        "customer_name":"Riendu for finX",        "cif_customer_type":"1010",        "account_branch":1,        "user_id":"1",        "payment_condition":"สั่งจ่ายเพียงคนเดียว"    }} 
+
+
+  
+{  
+   "Accept":"*/*",
+   "Accept-Encoding":"gzip, deflate",
+   "Cache-Control":"no-cache",
+   "Content-Length":"311",
+   "Content-Type":"application/json",
+   "Datetime":"2017-08-24T13:43:56.41906615Z",
+   "Postman-Token":"5e9222dc-1568-41c6-90bc-57673ed2e6e2",
+   "User-Agent":"PostmanRuntime/7.1.1",
+   "X-B3-Parentspanid":"485947cce2bf58da",
+   "X-B3-Sampled":"1",
+   "X-B3-Spanid":"ac4a61909994d549",
+   "X-B3-Traceid":"485947cce2bf58da",
+   "X-Caller-Domain":"caller-domain",
+   "X-Caller-Service":"client",
+   "X-Device":"android",
+   "X-Envoy-Decorator-Operation":"dsav-account.default.svc.cluster.local:6082/dsav_account*",
+   "X-Envoy-Internal":"true",
+   "X-Forwarded-For":"192.168.8.41",
+   "X-Forwarded-Proto":"http",
+   "X-Istio-Attributes":"CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UuaG9zdBIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAoqCh1kZXN0aW5hdGlvbi5zZXJ2aWNlLm5hbWVzcGFjZRIJEgdkZWZhdWx0CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UubmFtZRIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAo/ChNkZXN0aW5hdGlvbi5zZXJ2aWNlEigSJmRzYXYtYWNjb3VudC5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsCk8KCnNvdXJjZS51aWQSQRI/a3ViZXJuZXRlczovL2lzdGlvLWluZ3Jlc3NnYXRld2F5LTVkOTk5Yzg3NTctY3oya2wuaXN0aW8tc3lzdGVt",
+   "X-Real-Ip":"localhost",
+   "X-Request-Id":"c0d519ea-c3bd-9818-8f86-8b67dc876457"
+}
+
+
+
+{  
+   "Accept":"*/*",
+   "Accept-Encoding":"gzip, deflate",
+   "Cache-Control":"no-cache",
+   "Content-Length":"311",
+   "Content-Type":"application/json",
+   "Datetime":"2017-08-24T13:43:56.41906615Z",
+   "Postman-Token":"b180a0e0-a7d3-44ed-a8d5-35a085b556f3",
+   "User-Agent":"PostmanRuntime/7.1.1",
+   "X-B3-Sampled":"1",
+   "X-B3-Spanid":"bf1c1f2439f8caab",
+   "X-B3-Traceid":"bf1c1f2439f8caab",
+   "X-Caller-Domain":"caller-domain",
+   "X-Caller-Service":"client",
+   "X-Device":"android",
+   "X-Envoy-Decorator-Operation":"dsav-account.default.svc.cluster.local:6082/dsav_account*",
+   "X-Envoy-Internal":"true",
+   "X-Forwarded-For":"192.168.8.41",
+   "X-Forwarded-Proto":"http",
+   "X-Istio-Attributes":"CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UuaG9zdBIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAoqCh1kZXN0aW5hdGlvbi5zZXJ2aWNlLm5hbWVzcGFjZRIJEgdkZWZhdWx0CkQKGGRlc3RpbmF0aW9uLnNlcnZpY2UubmFtZRIoEiZkc2F2LWFjY291bnQuZGVmYXVsdC5zdmMuY2x1c3Rlci5sb2NhbAo/ChNkZXN0aW5hdGlvbi5zZXJ2aWNlEigSJmRzYXYtYWNjb3VudC5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsCk8KCnNvdXJjZS51aWQSQRI/a3ViZXJuZXRlczovL2lzdGlvLWluZ3Jlc3NnYXRld2F5LTVkOTk5Yzg3NTctY3oya2wuaXN0aW8tc3lzdGVt",
+   "X-Real-Ip":"localhost",
+   "X-Request-Id":"c0d519ea-c3bd-9818-8f86-8b67dc876457"
+}

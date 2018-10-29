@@ -10,21 +10,15 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: dsav-gateway
+  name: dsav-egress-gateway
 spec:
   selector:
-    istio: ingressgateway # use Istio default gateway implementation
+    istio: egressgateway # use Istio default gateway implementation
   servers:
   - port:
       number: 80
       name: http
       protocol: HTTP
-    hosts:
-    - "*"
-  - port:
-      number: 2379
-      name: dsav-mongo
-      protocol: MONGO
     hosts:
     - "*"
   # - port:
@@ -37,12 +31,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: dsav-gateway
+  name: dsav-egress-gateway-vs
 spec:
   hosts:
   - "*"
   gateways:
-  - dsav-gateway
+  - dsav-egress-gateway
   http:
   - match:
     - uri:

@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: dsav-account-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - dsav-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /dsav_account/
+    route:
+    - destination:
+        host: dsav-account
+        port:
+          number: 6082
+    fault:
+      abort:
+        percent: 50
+        httpStatus: 504

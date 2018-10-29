@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: dsav-report-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - dsav-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /dsav_report/
+    route:
+    - destination:
+        host: dsav-report
+        port:
+          number: 6086

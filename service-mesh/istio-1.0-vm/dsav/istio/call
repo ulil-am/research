@@ -1,7 +1,0 @@
-kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning -curl  -H "Content-Type:application/json" -H "x-request-id:c0d519ea-c3bd-4818-8f86-8b67dc876457" -H "x-real-ip:localhost" -H "x-caller-service:client" -H "x-caller-domain:caller-domain" -H "x-device:android" -H "datetime:2017-08-24T13:43:56.41906615Z" -H "accept:application/json"  http://203.154.100.197:31380/dsav_account/v1/test_connection/grpc
-
-
-kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning  http://203.154.100.197:31380/dsav_txn/v1/system/ping
-
-
-kubectl exec -it $FORTIO_POD  -c istio-proxy  -- sh -c 'curl localhost:15000/stats' | grep dsav_txn | grep pending

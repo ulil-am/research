@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: grpc-app-egress
+spec:
+  hosts:
+    - grpc-app
+  ports:
+    - number: 8000
+      name: http-grpc-app
+      protocol: HTTP
+    - number: 1212
+      name: dsav-grpc-app
+      protocol: HTTP2
+  resolution: DNS
+  location: MESH_EXTERNAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: grpc-app2-egress
+spec:
+  hosts:
+    - grpc-app2
+  ports:
+    - number: 8000
+      name: http-grpc-app2
+      protocol: HTTP
+    - number: 1212
+      name: dsav-grpc-app2
+      protocol: HTTP2
+  resolution: DNS
+  location: MESH_EXTERNAL
